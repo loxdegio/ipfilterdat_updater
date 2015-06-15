@@ -36,6 +36,8 @@ wget http://tools.pervii.com/eu/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-eu.txt
 cat $tmpdir/ipfilter_dat-eu.txt | grep -v '#' >> $tmpdir/ipfilter_dat.tmp
 wget http://tools.pervii.com/it/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-it.txt
 cat $tmpdir/ipfilter_dat-it.txt | grep -v '#' >> $tmpdir/ipfilter_dat.tmp
+wget http://tools.pervii.com/jp/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-jp.txt
+cat $tmpdir/ipfilter_dat-jp.txt | grep -v '#' >> $tmpdir/ipfilter_dat.tmp
 wget http://tools.pervii.com/kp/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-kp.txt
 cat $tmpdir/ipfilter_dat-kp.txt | grep -v '#' >> $tmpdir/ipfilter_dat.tmp
 wget http://tools.pervii.com/kr/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-kr.txt
