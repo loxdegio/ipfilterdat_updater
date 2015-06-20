@@ -30,6 +30,8 @@ unzip $tmpdir/ipfilter.zip -d $tmpdir
 cat $tmpdir/guarding.p2p | grep -v '#' >> $tmpdir/ipfilter_dat.tmp
 wget http://up.sur-la-toile.com/i1cde -O $tmpdir/ipfilter.7z
 7z e -so $tmpdir/ipfilter.7z | grep -v '#' >> $tmpdir/ipfilter_dat.tmp
+wget http://loxtestspace.altervista.org/ipfilterdat/ipfilter_emule-mods.v0153.dat
+cat $tmpdir/ipfilter_emule-mods.v0153.dat | grep -v '#' >> $tmpdir/ipfilter_dat.tmp
 wget http://tools.pervii.com/cn/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-cn.txt
 cat $tmpdir/ipfilter_dat-cn.txt | grep -v '#' | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , Custom/g" >> $tmpdir/ipfilter_dat.tmp
 wget http://tools.pervii.com/eu/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-eu.txt
