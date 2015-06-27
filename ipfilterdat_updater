@@ -25,16 +25,54 @@ destdir=~/.aMule
 
 mkdir $tmpdir
 
-wget http://upd.emule-security.org/ipfilter.zip -O $tmpdir/ipfilter.zip
-unzip $tmpdir/ipfilter.zip -d $tmpdir
-cat $tmpdir/guarding.p2p >> $tmpdir/ipfilter_dat.tmp
-wget http://up.sur-la-toile.com/i1cde -O $tmpdir/ipfilter.7z
-7z e -so $tmpdir/ipfilter.7z >> $tmpdir/ipfilter_dat.tmp
-wget http://loxtestspace.altervista.org/ipfilterdat/ipfilter_emule-mods.v0153.dat -O $tmpdir/ipfilter_emule-mods.v0153.dat
-cat $tmpdir/ipfilter_emule-mods.v0153.dat >> $tmpdir/ipfilter_dat.tmp
-for i in cn eu hk it jp kp kr ru us; do
-	wget http://tools.pervii.com/$i/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-$i.txt
-	cat $tmpdir/ipfilter_dat-$i.txt | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , From $i-ipfilter.dat/g" >> $tmpdir/ipfilter_dat.tmp
+repositories=$(zenity --height=480 --width=640 --list --checklist \
+   --title='Which ipfilter.dat do you want to enable?' --column=Check --column=Ipfilter --column=Description \
+   TRUE eMule-Security 'IPFilter from eMule-Security website' \
+   TRUE Sur-La-Toile 'One of the most complete IPFilter file' \
+   TRUE eMule-Mods 'IPFilter from eMule-Mods website *Very Aggressive*' \
+   TRUE Italy 'Italy specific IPFilter file' \
+   TRUE Europe 'European Union specific IPFilter file' \
+   TRUE US 'USA specific IPFilter file' \
+   TRUE Russia 'Russia specific IPFilter file' \
+   TRUE China 'China specific IPFilter file' \
+   TRUE NKorea 'North Korea specific IPFilter file' \
+   TRUE SKorea 'South Korea specific IPFilter file' \
+   TRUE Japan 'Japan specific IPFilter file' \
+   TRUE HK 'Hong Kong specific IPFilter file' --separator=':')
+   
+if [ -z $repositories ] ; then
+   echo "No selection";
+   exit 1;
+fi
+
+IFS=":" ; for file in $repositories ; do 
+   case $file in
+      eMule-Security) 	wget http://upd.emule-security.org/ipfilter.zip -O $tmpdir/ipfilter.zip;
+						unzip $tmpdir/ipfilter.zip -d $tmpdir;
+						cat $tmpdir/guarding.p2p >> $tmpdir/ipfilter_dat.tmp ;;
+      Sur-La-Toile) 	wget http://up.sur-la-toile.com/i1cde -O $tmpdir/ipfilter.7z;
+						7z e -so $tmpdir/ipfilter.7z >> $tmpdir/ipfilter_dat.tmp ;;
+      eMule-Mods) 		wget http://loxtestspace.altervista.org/ipfilterdat/ipfilter_emule-mods.v0153.dat -O $tmpdir/ipfilter_emule-mods.v0153.dat;
+						cat $tmpdir/ipfilter_emule-mods.v0153.dat >> $tmpdir/ipfilter_dat.tmp ;;
+	  Italy)			wget http://tools.pervii.com/it/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-it.txt;
+						cat $tmpdir/ipfilter_dat-it.txt | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , From it-ipfilter.dat/g" >> $tmpdir/ipfilter_dat.tmp ;;
+	  Europe)			wget http://tools.pervii.com/eu/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-eu.txt;
+						cat $tmpdir/ipfilter_dat-eu.txt | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , From eu-ipfilter.dat/g" >> $tmpdir/ipfilter_dat.tmp ;;
+	  US)				wget http://tools.pervii.com/us/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-us.txt;
+						cat $tmpdir/ipfilter_dat-us.txt | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , From us-ipfilter.dat/g" >> $tmpdir/ipfilter_dat.tmp ;;
+	  Russia)			wget http://tools.pervii.com/ru/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-ru.txt;
+						cat $tmpdir/ipfilter_dat-ru.txt | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , From ru-ipfilter.dat/g" >> $tmpdir/ipfilter_dat.tmp ;;
+	  China)			wget http://tools.pervii.com/cn/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-cn.txt;
+						cat $tmpdir/ipfilter_dat-cn.txt | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , From cn-ipfilter.dat/g" >> $tmpdir/ipfilter_dat.tmp ;;
+	  NKorea)			wget http://tools.pervii.com/kp/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-kp.txt;
+						cat $tmpdir/ipfilter_dat-kp.txt | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , From kp-ipfilter.dat/g" >> $tmpdir/ipfilter_dat.tmp ;;
+	  SKorea)			wget http://tools.pervii.com/kr/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-kr.txt;
+						cat $tmpdir/ipfilter_dat-kr.txt | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , From kr-ipfilter.dat/g" >> $tmpdir/ipfilter_dat.tmp ;;
+	  Japan)			wget http://tools.pervii.com/jp/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-jp.txt;
+						cat $tmpdir/ipfilter_dat-jp.txt | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , From jp-ipfilter.dat/g" >> $tmpdir/ipfilter_dat.tmp ;;
+	  HK)				wget http://tools.pervii.com/hk/ipfilter.dat.txt -O $tmpdir/ipfilter_dat-hk.txt;
+						cat $tmpdir/ipfilter_dat-hk.txt | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , From hk-ipfilter.dat/g" >> $tmpdir/ipfilter_dat.tmp ;;
+	  esac
 done
 
 cat $tmpdir/ipfilter_dat.tmp | grep -v '#' > $tmpdir/ipfilter_dat.tmp1
