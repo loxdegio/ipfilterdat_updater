@@ -74,6 +74,7 @@ IFS=":" ; for file in $repositories ; do
 						cat $tmpdir/ipfilter_dat-hk.txt | sed -e 's/[0-9]-/&\ /g' -e 's/- [0-9]/\ &/g' | sed -e "s/$/ , 000 , From hk-ipfilter.dat/g" >> $tmpdir/ipfilter_dat.tmp ;;
 	  esac
 done
+unset IFS
 
 cat $tmpdir/ipfilter_dat.tmp | grep -v '#' > $tmpdir/ipfilter_dat.tmp1
 
